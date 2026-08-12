@@ -18,3 +18,36 @@ p {
     color: #4b5563;
     font-size: 18px;
 }
+.kpi-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.kpi-card {
+    background-color: white;
+    padding: 25px;
+    width: 220px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.kpi-card h3 {
+    color: #6b7280;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.kpi-value {
+    color: #111827;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.kpi-change {
+    color: #16a34a;
+    font-size: 14px;
+}
