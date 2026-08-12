@@ -1,1 +1,1 @@
-console.log("Hello from my dashboard!");
+document.querySelector("h1").textContent = "My First BI Dashboard";
