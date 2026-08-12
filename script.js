@@ -7,4 +7,21 @@ const monthlyCalls = [
     { month: "Jun", calls: 155000 }
 ];
 
-console.log(monthlyCalls);
+const chart = document.querySelector(".chart");
+
+const maxCalls = Math.max(...monthlyCalls.map(item => item.calls));
+
+monthlyCalls.forEach(item => {
+
+    const bar = document.createElement("div");
+    bar.className = "bar";
+
+    const height = (item.calls / maxCalls) * 100;
+    bar.style.height = height + "%";
+
+    const label = document.createElement("span");
+    label.textContent = item.month;
+
+    bar.appendChild(label);
+    chart.appendChild(bar);
+});
