@@ -1,140 +1,60 @@
-const monthlyCalls = [
-    { month: "Jan", queue: "Technical", calls: 45000 },
-    { month: "Jan", queue: "Sales", calls: 40000 },
-    { month: "Jan", queue: "Returns", calls: 40000 },
+<!DOCTYPE html>
+<html>
 
-    { month: "Feb", queue: "Technical", calls: 48000 },
-    { month: "Feb", queue: "Sales", calls: 42000 },
-    { month: "Feb", queue: "Returns", calls: 41000 },
+<head>
+    <title>My First Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-    { month: "Mar", queue: "Technical", calls: 50000 },
-    { month: "Mar", queue: "Sales", calls: 45000 },
-    { month: "Mar", queue: "Returns", calls: 43000 },
+<body>
 
-    { month: "Apr", queue: "Technical", calls: 52000 },
-    { month: "Apr", queue: "Sales", calls: 47000 },
-    { month: "Apr", queue: "Returns", calls: 44000 },
+    <h1>My First Dashboard</h1>
 
-    { month: "May", queue: "Technical", calls: 55000 },
-    { month: "May", queue: "Sales", calls: 49000 },
-    { month: "May", queue: "Returns", calls: 44000 },
+    <p>Welcome to my first HTML project!</p>
 
-    { month: "Jun", queue: "Technical", calls: 60000 },
-    { month: "Jun", queue: "Sales", calls: 55000 },
-    { month: "Jun", queue: "Returns", calls: 65000 }
-];
+    <h2>Customer Service</h2>
 
+    <div class="filter-container">
 
-const queueFilter = document.querySelector("#queueFilter");
-const chart = document.querySelector(".chart");
-const callsKpi = document.querySelector(".kpi-value");
+        <label for="queueFilter">Queue:</label>
 
+        <select id="queueFilter">
+            <option value="All">All</option>
+            <option value="Technical">Technical</option>
+            <option value="Sales">Sales</option>
+            <option value="Returns">Returns</option>
+        </select>
 
-function updateDashboard() {
+    </div>
 
-    const selectedQueue = queueFilter.value;
+    <div class="kpi-container">
 
-    let filteredData;
+        <div class="kpi-card">
+            <h3>Calls Today</h3>
+            <p class="kpi-value">125,430</p>
+            <p class="kpi-change">+4.2%</p>
+        </div>
 
-    // Filter by queue
-    if (selectedQueue === "All") {
-        filteredData = monthlyCalls;
-    } else {
-        filteredData = monthlyCalls.filter(
-            item => item.queue === selectedQueue
-        );
-    }
+        <div class="kpi-card">
+            <h3>Average Handling Time</h3>
+            <p class="kpi-value">06:42</p>
+            <p class="kpi-change">-2.1%</p>
+        </div>
 
+        <div class="kpi-card">
+            <h3>Customer Satisfaction</h3>
+            <p class="kpi-value">91.2%</p>
+            <p class="kpi-change">+1.4%</p>
+        </div>
 
-    // Group data by month
-    const monthlyData = {};
+    </div>
 
-    filteredData.forEach(item => {
+    <h2>Calls by Month</h2>
 
-        if (!monthlyData[item.month]) {
-            monthlyData[item.month] = 0;
-        }
+    <div class="chart"></div>
 
-        monthlyData[item.month] += item.calls;
+    <script src="script.js?v=7"></script>
 
-    });
+</body>
 
-
-    // Convert grouped data into an array
-    const chartData = Object.entries(monthlyData).map(
-        ([month, calls]) => ({
-            month: month,
-            calls: calls
-        })
-    );
-
-
-    // Update KPI
-
-    const totalCalls = chartData.reduce(
-        (total, item) => total + item.calls,
-        0
-    );
-
-    callsKpi.textContent = totalCalls.toLocaleString();
-
-
-    // Clear old chart
-
-    chart.innerHTML = "";
-
-
-    // Find maximum value
-
-    const maxCalls = Math.max(
-        ...chartData.map(item => item.calls)
-    );
-
-
-    // Create chart
-
-    chartData.forEach(item => {
-
-        const bar = document.createElement("div");
-
-        bar.className = "bar";
-
-        const height = (item.calls / maxCalls) * 100;
-
-        bar.style.height = height + "%";
-
-
-        // Value above the bar
-
-        const valueLabel = document.createElement("div");
-
-        valueLabel.className = "bar-value";
-
-        valueLabel.textContent = item.calls.toLocaleString();
-
-
-        // Month below the bar
-
-        const monthLabel = document.createElement("span");
-
-        monthLabel.textContent = item.month;
-
-
-        bar.appendChild(valueLabel);
-
-        bar.appendChild(monthLabel);
-
-        chart.appendChild(bar);
-
-    });
-}
-
-
-// Load dashboard
-
-updateDashboard();
-
-
-// Update when filter changes
-
-queueFilter.addEventListener("change", updateDashboard);
+</html>
