@@ -25,8 +25,15 @@ monthlyCalls.forEach(item => {
     const height = (item.calls / maxCalls) * 100;
     bar.style.height = height + "%";
 
-    const label = document.createElement("span");
-    label.textContent = item.month;
+   const valueLabel = document.createElement("div");
+valueLabel.className = "bar-value";
+valueLabel.textContent = item.calls.toLocaleString();
+
+const monthLabel = document.createElement("span");
+monthLabel.textContent = item.month;
+
+bar.appendChild(valueLabel);
+bar.appendChild(monthLabel);
 
     bar.appendChild(label);
     chart.appendChild(bar);
