@@ -36,6 +36,7 @@ function updateDashboard() {
 
     let filteredData;
 
+    // Filter by queue
     if (selectedQueue === "All") {
         filteredData = monthlyCalls;
     } else {
@@ -45,9 +46,32 @@ function updateDashboard() {
     }
 
 
+    // Group data by month
+    const monthlyData = {};
+
+    filteredData.forEach(item => {
+
+        if (!monthlyData[item.month]) {
+            monthlyData[item.month] = 0;
+        }
+
+        monthlyData[item.month] += item.calls;
+
+    });
+
+
+    // Convert grouped data into an array
+    const chartData = Object.entries(monthlyData).map(
+        ([month, calls]) => ({
+            month: month,
+            calls: calls
+        })
+    );
+
+
     // Update KPI
 
-    const totalCalls = filteredData.reduce(
+    const totalCalls = chartData.reduce(
         (total, item) => total + item.calls,
         0
     );
@@ -63,13 +87,13 @@ function updateDashboard() {
     // Find maximum value
 
     const maxCalls = Math.max(
-        ...filteredData.map(item => item.calls)
+        ...chartData.map(item => item.calls)
     );
 
 
     // Create chart
 
-    filteredData.forEach(item => {
+    chartData.forEach(item => {
 
         const bar = document.createElement("div");
 
@@ -80,12 +104,16 @@ function updateDashboard() {
         bar.style.height = height + "%";
 
 
+        // Value above the bar
+
         const valueLabel = document.createElement("div");
 
         valueLabel.className = "bar-value";
 
         valueLabel.textContent = item.calls.toLocaleString();
 
+
+        // Month below the bar
 
         const monthLabel = document.createElement("span");
 
@@ -102,11 +130,11 @@ function updateDashboard() {
 }
 
 
-// Run dashboard when page loads
+// Load dashboard
 
 updateDashboard();
 
 
-// Run dashboard when filter changes
+// Update when filter changes
 
 queueFilter.addEventListener("change", updateDashboard);
