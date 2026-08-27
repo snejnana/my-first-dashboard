@@ -7,6 +7,12 @@ const monthlyCalls = [
     { month: "Jun", calls: 155000 }
 ];
 
+const latestCalls = monthlyCalls[monthlyCalls.length - 1].calls;
+
+const callsKpi = document.querySelector(".kpi-value");
+
+callsKpi.textContent = latestCalls.toLocaleString();
+
 const chart = document.querySelector(".chart");
 
 const maxCalls = Math.max(...monthlyCalls.map(item => item.calls));
