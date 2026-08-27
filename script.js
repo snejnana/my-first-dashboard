@@ -24,55 +24,89 @@ const monthlyCalls = [
     { month: "Jun", queue: "Returns", calls: 65000 }
 ];
 
-// Update Calls Today KPI
 
-const latestCalls = monthlyCalls[monthlyCalls.length - 1].calls;
-
+const queueFilter = document.querySelector("#queueFilter");
+const chart = document.querySelector(".chart");
 const callsKpi = document.querySelector(".kpi-value");
 
-callsKpi.textContent = latestCalls.toLocaleString();
+
+function updateDashboard() {
+
+    const selectedQueue = queueFilter.value;
+
+    let filteredData;
+
+    if (selectedQueue === "All") {
+        filteredData = monthlyCalls;
+    } else {
+        filteredData = monthlyCalls.filter(
+            item => item.queue === selectedQueue
+        );
+    }
 
 
-// Create chart
+    // Update KPI
 
-const chart = document.querySelector(".chart");
+    const totalCalls = filteredData.reduce(
+        (total, item) => total + item.calls,
+        0
+    );
 
-const maxCalls = Math.max(
-    ...monthlyCalls.map(item => item.calls)
-);
-
-
-monthlyCalls.forEach(item => {
-
-    const bar = document.createElement("div");
-
-    bar.className = "bar";
-
-    const height = (item.calls / maxCalls) * 100;
-
-    bar.style.height = height + "%";
+    callsKpi.textContent = totalCalls.toLocaleString();
 
 
-    // Value above the bar
+    // Clear old chart
 
-    const valueLabel = document.createElement("div");
-
-    valueLabel.className = "bar-value";
-
-    valueLabel.textContent = item.calls.toLocaleString();
+    chart.innerHTML = "";
 
 
-    // Month below the bar
+    // Find maximum value
 
-    const monthLabel = document.createElement("span");
+    const maxCalls = Math.max(
+        ...filteredData.map(item => item.calls)
+    );
 
-    monthLabel.textContent = item.month;
+
+    // Create chart
+
+    filteredData.forEach(item => {
+
+        const bar = document.createElement("div");
+
+        bar.className = "bar";
+
+        const height = (item.calls / maxCalls) * 100;
+
+        bar.style.height = height + "%";
 
 
-    bar.appendChild(valueLabel);
+        const valueLabel = document.createElement("div");
 
-    bar.appendChild(monthLabel);
+        valueLabel.className = "bar-value";
 
-    chart.appendChild(bar);
+        valueLabel.textContent = item.calls.toLocaleString();
 
-});
+
+        const monthLabel = document.createElement("span");
+
+        monthLabel.textContent = item.month;
+
+
+        bar.appendChild(valueLabel);
+
+        bar.appendChild(monthLabel);
+
+        chart.appendChild(bar);
+
+    });
+}
+
+
+// Run dashboard when page loads
+
+updateDashboard();
+
+
+// Run dashboard when filter changes
+
+queueFilter.addEventListener("change", updateDashboard);
