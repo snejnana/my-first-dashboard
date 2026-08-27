@@ -1,12 +1,28 @@
 const monthlyCalls = [
-    { month: "Jan", calls: 125000 },
-    { month: "Feb", calls: 131000 },
-    { month: "Mar", calls: 138000 },
-    { month: "Apr", calls: 142000 },
-    { month: "May", calls: 148000 },
-    { month: "Jun", calls: 180000 }
-];
+    { month: "Jan", queue: "Technical", calls: 45000 },
+    { month: "Jan", queue: "Sales", calls: 40000 },
+    { month: "Jan", queue: "Returns", calls: 40000 },
 
+    { month: "Feb", queue: "Technical", calls: 48000 },
+    { month: "Feb", queue: "Sales", calls: 42000 },
+    { month: "Feb", queue: "Returns", calls: 41000 },
+
+    { month: "Mar", queue: "Technical", calls: 50000 },
+    { month: "Mar", queue: "Sales", calls: 45000 },
+    { month: "Mar", queue: "Returns", calls: 43000 },
+
+    { month: "Apr", queue: "Technical", calls: 52000 },
+    { month: "Apr", queue: "Sales", calls: 47000 },
+    { month: "Apr", queue: "Returns", calls: 44000 },
+
+    { month: "May", queue: "Technical", calls: 55000 },
+    { month: "May", queue: "Sales", calls: 49000 },
+    { month: "May", queue: "Returns", calls: 44000 },
+
+    { month: "Jun", queue: "Technical", calls: 60000 },
+    { month: "Jun", queue: "Sales", calls: 55000 },
+    { month: "Jun", queue: "Returns", calls: 65000 }
+];
 
 // Update Calls Today KPI
 
